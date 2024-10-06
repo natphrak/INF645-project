@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pets</title>
+    <link rel="stylesheet" href="../css/materialize.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../css/materialize.css"  media="screen,projection"/>
+</head>
+
+<body class="brown lighten-5">
+    <!-- Navbar -->
+    <header>
+        <nav class="z-depth-0">
+            <div class="nav-wrapper container">
+                <!-- Nav bar for bigger screens -->
+                <a
+                    href="/"
+                    data-target="mobile-menu"
+                    class="brand-logo white-text"
+                    aria-label="Task Manager Home"
+                >
+                    YOUR PET
+                </a>
+
+                <!-- Hamburger menu for medium and small screens -->
+                <a
+                href="#"
+                class="sidenav-trigger right hide-on-med-and-up red-text text-lighten-4"
+                data-target="mobile-menu"
+                >
+                    <i class="material-icons">menu</i>
+                </a>
+
+                <!-- Navbar Links for large screens -->
+                <ul class="right hide-on-small-and-down">
+                    <li>
+                        <a href="/pages/pets.html" class="white-text">PETS</a>
+                    </li>
+                    <li>
+                        <a href="/pages/about.html" class="white-text">HOW TO PLAY</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile sidebar -->
+    <aside>
+        <ul class="sidenav" id="mobile-menu">
+            <li>
+                <a class="subheader red-text text-lighten-4">YOUR PET</a>
+            </li>
+            <li>
+                <a href="/index.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">home</i>
+                    HOME
+                </a>
+            </li>
+            <li>
+                <a href="/pages/pets.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">pets</i>
+                    PETS
+                </a>
+            </li>
+            <li>
+                <a href="/pages/about.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">info_outline</i>
+                    HOW TO PLAY
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+
+    <main>
+        <div class="container">
+            <h5 class="center black-text">Your Pets</h5>
+            <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, illo maiores laboriosam molestias fugiat asperiores nihil non sapiente, nam aliquam aut quisquam accusantium, officiis ab eligendi. Natus expedita suscipit cum.</p>
+
+            <div class="card-panel row valign-wrapper white">
+                <div class="pet-details col s10">
+                    <h5 class="pet-name red-text text-lighten-2">Pet Name</h5>
+                    <div class="pet-stats grey-text text-darken-2">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, illo maiores laboriosam molestias fugiat asperiores nihil non sapiente, nam aliquam aut quisquam accusantium, officiis ab eligendi. Natus expedita suscipit cum.
+                    </div>
+                </div>
+                <div class="col s2 right-align">
+                    <button class="task-delete btn-flat" aria-label="Delete Task">
+                        <i class="material-icons black-text-darken-1">clear</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="center">
+            <button
+            class="btn-large filled sidenav-trigger waves-effect waves-light"
+            data-target="side-form"
+            >
+                <i class="material-icons left">add</i>
+                New Pet
+            </button>
+        </div>
+
+        <div class="sidenav side-form" id="side-form">
+            <form class="add-pet container section">
+                <h6>CREATE NEW PET</h6>
+                <div class="divider"></div>
+                <div class="input-field">
+                    <div>
+                        <label for="name" class="black-text">Pet Name</label>
+                        <input type="text" placeholder="Enter Pet Name" id="name" class="validate" />
+                    </div>
+                    <div>
+                        <label for="species" class="black-text">Species</label>
+                        <select id="species" class="browser-default">
+                            <option value="" disabled selected>Choose</option>
+                            <option value="dog">dog</option>
+                            <option value="cat">cat</option>
+                        </select> 
+                    </div>
+                </div>
+                
+                <div class="input-field center">
+                    <button type="button" class="btn-small filled waves-effect waves-light" style="margin-top:15px;">
+                        Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </main>
+
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+</body>
+</html>

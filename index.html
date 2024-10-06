@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+</head>
+<body class="brown lighten-5">
+    <!-- Navbar -->
+    <header>
+        <nav class="z-depth-0">
+            <div class="nav-wrapper container">
+                <!-- Nav bar for bigger screens -->
+                <a
+                    href="/"
+                    data-target="mobile-menu"
+                    class="brand-logo white-text"
+                    aria-label="Task Manager Home"
+                >
+                    YOUR PET
+                </a>
+
+                <!-- Hamburger menu for medium and small screens -->
+                <a
+                href="#"
+                class="sidenav-trigger right hide-on-med-and-up red-text text-lighten-4"
+                data-target="mobile-menu"
+                >
+                    <i class="material-icons">menu</i>
+                </a>
+
+                <!-- Navbar Links for large screens -->
+                <ul class="right hide-on-small-and-down">
+                    <li>
+                        <a href="/pages/pets.html" class="white-text">PETS</a>
+                    </li>
+                    <li>
+                        <a href="/pages/about.html" class="white-text">HOW TO PLAY</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile sidebar -->
+    <aside>
+        <ul class="sidenav" id="mobile-menu">
+            <li>
+                <a class="subheader red-text text-lighten-4">YOUR PET</a>
+            </li>
+            <li>
+                <a href="/index.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">home</i>
+                    HOME
+                </a>
+            </li>
+            <li>
+                <a href="/pages/pets.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">pets</i>
+                    PETS
+                </a>
+            </li>
+            <li>
+                <a href="/pages/about.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">info_outline</i>
+                    HOW TO PLAY
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <main>
+        <!-- Pet -->
+        <div class="container">
+            <div class="row g-0">
+                <!-- Name -->
+                <div class="col s12 flow-text center">
+                    <h3 class="pet-name black-text">Pet Name</h3>
+                </div>
+
+                <!-- Pet display area -->
+                <div class="col m8 s12 center">
+                    <div class="col m10 s12">
+                        <img src="img/pet.png">
+                    </div>
+                    <div class="col m2 s12 pet-status">
+                        <div class="black-text flow-text">
+                            Status
+                        </div>
+                        <div class="pet-status-icons">
+                            <img src="img/hungry.png">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls and log -->
+                <div class="col m4 s12 center">
+                    <!-- Buttons -->
+                    <div class="pet-buttons row g-3" style="margin-top:15px;margin-bottom:15px;">
+                        <div tabindex="0" class="col s4 m12 l12">
+                            <div class="btn-large waves-effect waves-light filled icon-left">
+                                <i class="material-icons">favorite</i>Play
+                            </div>
+                        </div>
+                        <div tabindex="0" class="col s4 m12 l12">
+                            <div class="btn-large waves-effect waves-light filled icon-left">
+                                <i class="material-icons">restaurant</i>Feed
+                            </div>
+                        </div>
+                        <div tabindex="0" class="col s4 m12 l12">
+                            <div class="btn-large waves-effect waves-light filled icon-left">
+                                <i class="material-icons">local_florist</i>Clean
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Log -->
+                    <div class="input-field">
+                        <textarea readonly
+                        id="pet-log"
+                        class="pet-log white black-text"
+                        style="margin-top:15px;margin-bottom:15px;height:175px;resize:none;">Your pet says 'Hi'!</textarea>
+                        <label for="pet-log" class="black-text">Log</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+</body>
+</html>

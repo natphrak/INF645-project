@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="../css/materialize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../css/materialize.css"  media="screen,projection"/>
+</head>
+
+<body class="brown lighten-5">
+    <!-- Navbar -->
+    <header>
+        <nav class="z-depth-0">
+            <div class="nav-wrapper container">
+                <!-- Nav bar for bigger screens -->
+                <a
+                    href="/"
+                    data-target="mobile-menu"
+                    class="brand-logo white-text"
+                    aria-label="Task Manager Home"
+                >
+                    YOUR PET
+                </a>
+
+                <!-- Hamburger menu for medium and small screens -->
+                <a
+                href="#"
+                class="sidenav-trigger right hide-on-med-and-up red-text text-lighten-4"
+                data-target="mobile-menu"
+                >
+                    <i class="material-icons">menu</i>
+                </a>
+
+                <!-- Navbar Links for large screens -->
+                <ul class="right hide-on-small-and-down">
+                    <li>
+                        <a href="/pages/pets.html" class="white-text">PETS</a>
+                    </li>
+                    <li>
+                        <a href="/pages/about.html" class="white-text">HOW TO PLAY</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile sidebar -->
+    <aside>
+        <ul class="sidenav" id="mobile-menu">
+            <li>
+                <a class="subheader red-text text-lighten-4">YOUR PET</a>
+            </li>
+            <li>
+                <a href="/index.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">home</i>
+                    HOME
+                </a>
+            </li>
+            <li>
+                <a href="/pages/pets.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">pets</i>
+                    PETS
+                </a>
+            </li>
+            <li>
+                <a href="/pages/about.html" class="waves-effect white-text">
+                    <i class="material-icons white-text">info_outline</i>
+                    HOW TO PLAY
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <main>
+        <div class="container">
+            <h5 class="center black-text">How To Play</h5>
+            <div class="grey-text">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, illo maiores laboriosam molestias fugiat asperiores nihil non sapiente, nam aliquam aut quisquam accusantium, officiis ab eligendi. Natus expedita suscipit cum.</p>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+</body>
+</html>
