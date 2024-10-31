@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pets</title>
-    <link rel="stylesheet" href="../css/materialize.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="../css/materialize.css">
+    <link rel="manifest" href="../manifest.json" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../css/materialize.css"  media="screen,projection"/>
 </head>
@@ -106,7 +106,7 @@
         </div>
 
         <div class="sidenav side-form" id="side-form">
-            <form class="add-pet container section">
+            <form id="newPetForm" class="add-pet container section">
                 <h6>CREATE NEW PET</h6>
                 <div class="divider"></div>
                 <div class="input-field">
@@ -125,7 +125,7 @@
                 </div>
                 
                 <div class="input-field center">
-                    <button type="button" class="btn-small filled waves-effect waves-light" style="margin-top:15px;">
+                    <button id="btnSave" type="submit" type="button" class="btn-small filled waves-effect waves-light" style="margin-top:15px;">
                         Create
                     </button>
                 </div>
@@ -136,5 +136,6 @@
 
     <script type="text/javascript" src="/js/materialize.min.js"></script>
     <script type="module" src="/js/ui.js"></script>
+    <script defer src="/js/app.js"></script>
 </body>
 </html>

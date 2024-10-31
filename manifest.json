@@ -1,0 +1,15 @@
+{
+    "short_name": "Your Pet",
+    "name": "Your Pet: Interactive Pet",
+    "icons": [
+        {
+            "src": "/img/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#5D3F3E",
+    "background_color": "#EFEBE9"
+}
