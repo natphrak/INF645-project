@@ -2,15 +2,21 @@
     "short_name": "Your Pet",
     "name": "Your Pet: Interactive Pet",
     "description": "Interactive pet app, just for fun",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "theme_color": "#5D3F3E",
+    "background_color": "#EFEBE9",
+    "orientation": "portrait-primary",
     "icons": [
         {
             "src": "/img/icon-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
+        },
+        {
+            "src": "/img/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
         }
-    ],
-    "start_url": "/",
-    "display": "standalone",
-    "theme_color": "#5D3F3E",
-    "background_color": "#EFEBE9"
+    ]
 }
