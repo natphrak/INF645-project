@@ -1,6 +1,7 @@
 {
     "short_name": "Your Pet",
     "name": "Your Pet: Interactive Pet",
+    "description": "Interactive pet app, just for fun",
     "icons": [
         {
             "src": "/img/icon-192x192.png",
@@ -8,7 +9,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": ".",
+    "start_url": "/",
     "display": "standalone",
     "theme_color": "#5D3F3E",
     "background_color": "#EFEBE9"
