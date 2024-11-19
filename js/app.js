@@ -93,7 +93,7 @@ for (const pet of pets) {
         await storeUpdate.put({ ...pet, id: savedPet.id, synced: true });
         await txUpdate.done;
     } catch (error) {
-        console.error("Error syncing pet:", error);
+        console.error("Error syncing pet: ", error);
     }
     }
 }

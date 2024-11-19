@@ -53,8 +53,13 @@ async function handleFeed() {
         // Store data in IndexedDB
         await storePetInIndexedDB(petId, updatedData);
 
+        // Update Firebase if online
+        if (isOnline()) {
+            await updatePetInFirebase(petId, updatedData);
+        }
+
         const log = document.getElementById('pet-log');
-        log.innerHTML += `<p>You fed ${activePet.name}.</p>`
+        log.innerHTML += `<p>You fed ${activePet.name}.</p>`;
 
         displayActivePet();
     }
@@ -70,6 +75,11 @@ async function handleClean() {
         
         // Store data in IndexedDB
         await storePetInIndexedDB(petId, updatedData);
+
+        // Update Firebase if online
+        if (isOnline()) {
+            await updatePetInFirebase(petId, updatedData);
+        }
 
         const log = document.getElementById('pet-log');
         log.innerHTML += `<p>You brushed ${activePet.name}.</p>`
@@ -89,6 +99,11 @@ async function handlePlay() {
         // Store data in IndexedDB
         await storePetInIndexedDB(petId, updatedData);
 
+        // Update Firebase if online
+        if (isOnline()) {
+            await updatePetInFirebase(petId, updatedData);
+        }
+
         const log = document.getElementById('pet-log');
         log.innerHTML += `<p>You and ${activePet.name} played together.</p>`
 
@@ -100,7 +115,18 @@ async function storePetInIndexedDB(petId, updatedData) {
     const db = await getDB();
     const tx = db.transaction("pets", "readwrite");
     const store = tx.objectStore("pets");
-    await store.put({ ...updatedData, id: petId, synced: false });
+
+    // Get the existing pet data from IndexedDB
+    const existingPet = await store.get(petId);
+
+    // Update the existing pet data with the new values
+    const updatedPet = {
+        ...existingPet, // Keep existing data
+        ...updatedData, // Add new values
+        synced: false // Mark as unsynced
+    };
+
+    await store.put(updatedPet); // Update the pet in IndexedDB
     await tx.done;
 }
 
@@ -112,20 +138,20 @@ async function syncPets() {
     await tx.done;
 
     for (const pet of pets) {
-        if (!pet.synced && isOnline()) {
+        if (!pet.synced) {
             try {
                 await updatePetInFirebase(pet.id, pet);
-                // Update the synced flag in IndexedDB
                 const txUpdate = db.transaction("pets", "readwrite");
                 const storeUpdate = txUpdate.objectStore("pets");
-                await storeUpdate.put({ ...pet, synced: true }); // Update the synced flag
+                await storeUpdate.put({ ...pet, synced: true });
                 await txUpdate.done;
             } catch (error) {
-                console.error("Error syncing pet:", error);
+                console.error("Error syncing pet: ", error);
             }
         }
     }
 }
+
 
 function isOnline() {
     return navigator.onLine;
