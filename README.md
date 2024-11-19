@@ -8,3 +8,6 @@ This websites includes a service worker and a manifest.json, making it capable o
 The manifest.json will allow users to install the website onto their devices as an app. It contains information such as app name, icons, and theme colors.
 
 Another feature of the app is that pets can be interacted with offline. Users can feed, pet, and play with their pets and when your device returns online, it will sync with the database and update your pet's data. This is done using IndexedDB and Firebase. When offline, actions performed on the pet will be stored in IndexedDB. When back online, unsynced data will get synced to Firebase. New pets can be created this way as well. Simply feed, clean, play, create, or edit pets offline as you please, and it will all be there later.
+
+Note for instructor:
+I forgot to mention it on my submission, but, while it connects and works on the first go, I cannot figure out how to make the site functional when refreshing the page. I've tried a lot of things but it just won't work when I refresh or click on a new page. It only works if you clear all site data and refresh everything.
