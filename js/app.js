@@ -81,9 +81,9 @@ for (const pet of pets) {
         const petToSync = {
         name: pet.name,
         species: pet.species,
-        food: 0,
-        clean: 0,
-        play: 0,
+        food: pet.food,
+        clean: pet.clean,
+        play: pet.play,
         status: pet.status,
         };
         const savedPet = await addPetToFirebase(petToSync);
