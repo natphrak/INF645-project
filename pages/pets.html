@@ -80,17 +80,33 @@
             <h5 class="center black-text">Your Pets</h5>
             <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, illo maiores laboriosam molestias fugiat asperiores nihil non sapiente, nam aliquam aut quisquam accusantium, officiis ab eligendi. Natus expedita suscipit cum.</p>
 
-            <div class="card-panel row valign-wrapper white">
-                <div class="pet-details col s10">
-                    <h5 class="pet-name red-text text-lighten-2">Pet Name</h5>
-                    <div class="pet-stats grey-text text-darken-2">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, illo maiores laboriosam molestias fugiat asperiores nihil non sapiente, nam aliquam aut quisquam accusantium, officiis ab eligendi. Natus expedita suscipit cum.
+            <div class="pets">
+                <div class="card-panel row valign-wrapper white" data-id="${pet.id}">
+                    <div class="col s10">
+                        <h5 class="pet-name red-text text-lighten-2">${pet.name}</h5>
+                        <div class="grey-text text-darken-2">
+                            <p>
+                                Species: ${pet.species}
+                            </p>
+                            <p>
+                                Times fed: ${pet.food}
+                            </p>
+                            <p>
+                                Times cleaned: ${pet.clean}
+                            </p>
+                            <p>
+                                Times played with: ${pet.play}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="col s2 right-align">
-                    <button class="task-delete btn-flat" aria-label="Delete Task">
-                        <i class="material-icons black-text-darken-1">clear</i>
-                    </button>
+                    <div class="col s2 right-align">
+                        <button class="pet-delete btn-flat" aria-label="Delete pet">
+                        <i class="material-icons black-text text-darken-1" style="font-size: 30px">delete</i>
+                        </button>
+                        <button class="pet-edit btn-flat" data-target="side-form" aria-label="Edit pet">
+                        <i class="material-icons black-text text-darken-1" style="font-size: 30px">edit</i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,9 +139,14 @@
                         </select> 
                     </div>
                 </div>
+                <input type="hidden" id="pet-id" />
                 
                 <div class="input-field center">
-                    <button id="btnSave" type="submit" type="button" class="btn-small filled waves-effect waves-light" style="margin-top:15px;">
+                    <button
+                    id="form-action-btn"
+                    type="button"
+                    class="btn-small filled waves-effect waves-light"
+                    style="margin-top:15px;">
                         Create
                     </button>
                 </div>
@@ -134,8 +155,8 @@
     </div>
     </main>
 
-    <script type="text/javascript" src="/js/materialize.min.js"></script>
-    <script type="module" src="/js/ui.js"></script>
-    <script defer src="/js/app.js"></script>
+    <script type="text/javascript" src="../js/materialize.min.js"></script>
+    <script type="module" src="../js/app.js"></script>
+    <script type="module" src="../js/firebaseDB.js"></script>
 </body>
 </html>

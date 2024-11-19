@@ -77,22 +77,16 @@
         <!-- Pet -->
         <div class="container">
             <div class="row g-0">
-                <!-- Name -->
-                <div class="col s12 flow-text center">
-                    <h3 class="pet-name black-text">Pet Name</h3>
-                </div>
-
-                <!-- Pet display area -->
-                <div class="col m8 s12 center">
-                    <div class="col m10 s12">
-                        <img src="img/pet.png">
+                <div id="pet-info"  class="s12 m8 l6">
+                    <!-- Name -->
+                    <div class="col s12 flow-text center">
+                        <h3 id="pet-name" class="black-text">Pet Name</h3>
                     </div>
-                    <div class="col m2 s12 pet-status">
-                        <div class="black-text flow-text">
-                            Status
-                        </div>
-                        <div class="pet-status-icons">
-                            <img src="img/hungry.png">
+
+                    <!-- Pet display area -->
+                    <div class="col m8 s12 center">
+                        <div class="col m10 s12">
+                            <img src="img/404.png">
                         </div>
                     </div>
                 </div>
@@ -102,29 +96,38 @@
                     <!-- Buttons -->
                     <div class="pet-buttons row g-3" style="margin-top:15px;margin-bottom:15px;">
                         <div tabindex="0" class="col s4 m12 l12">
-                            <div class="btn-large waves-effect waves-light filled icon-left">
-                                <i class="material-icons">favorite</i>Play
-                            </div>
-                        </div>
-                        <div tabindex="0" class="col s4 m12 l12">
-                            <div class="btn-large waves-effect waves-light filled icon-left">
+                            <div id="feed" class="btn-large waves-effect waves-light filled icon-left">
                                 <i class="material-icons">restaurant</i>Feed
                             </div>
                         </div>
                         <div tabindex="0" class="col s4 m12 l12">
-                            <div class="btn-large waves-effect waves-light filled icon-left">
+                            <div id="clean" class="btn-large waves-effect waves-light filled icon-left">
                                 <i class="material-icons">local_florist</i>Clean
+                            </div>
+                        </div>
+                        <div tabindex="0" class="col s4 m12 l12">
+                            <div id="play" class="btn-large waves-effect waves-light filled icon-left">
+                                <i class="material-icons">favorite</i>Play
                             </div>
                         </div>
                     </div>
 
                     <!-- Log -->
-                    <div class="input-field">
-                        <textarea readonly
-                        id="pet-log"
-                        class="pet-log white black-text"
-                        style="margin-top:15px;margin-bottom:15px;height:175px;resize:none;">Your pet says 'Hi'!</textarea>
-                        <label for="pet-log" class="black-text">Log</label>
+                    <div id="pet-log"
+                    style="
+                    margin-top:15px;
+                    margin-bottom:15px;
+                    height:175px;
+                    resize:none;
+                    background-color: white;
+                    color: black;
+                    padding: 5px 20px 5px 20px;
+                    overflow: auto;
+                    text-align: left;
+                    ">
+                        <p>
+                            Your pet says 'Hi'!
+                        </p>
                     </div>
                 </div>
             </div>
@@ -132,7 +135,7 @@
     </main>
 
     <script type="text/javascript" src="./js/materialize.min.js"></script>
-    <script type="module" src="./js/ui.js"></script>
-    <script defer src="./js/app.js"></script>
+    <script type="module" src="./js/petActions.js"></script>
+    <script type="module" src="./js/firebaseDB.js"></script>
 </body>
 </html>

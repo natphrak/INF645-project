@@ -13,12 +13,13 @@ let assets = [
     '/',
     '/index.html',
     '/404.html',
+    '/manifest.json',
     '/js/app.js',
-    '/js/ui.js',
     '/js/materialize.js',
     '/css/materialize.css',
     '/pages/about.html',
-    '/pages/pets.html'
+    '/pages/pets.html',
+    'https://fonts.googleapis.com/icon?family=Material+Icons'
 ];
 
 let imageAssets = [
@@ -125,7 +126,7 @@ self.addEventListener('fetch', (event) => {
                     event.request.url.match(/\.png$/i)
                 ) {
                     return caches.open(imageName).then((cache) => {
-                    return cache.match('/img/404.png');
+                    return cache.match('./img/404.png');
                     });
                 }
                 }
@@ -135,7 +136,7 @@ self.addEventListener('fetch', (event) => {
                 //return the 404.html file if it is a request for an html file
                 if (event.request.url.match(/\.html/i)) {
                 return caches.open(staticName).then((cache) => {
-                    return cache.match('/404.html');
+                    return cache.match('./404.html');
                 });
                 }
             }
@@ -152,14 +153,14 @@ const handleFetchResponse = (fetchResponse, request) => {
     // console.log('handle request for', type, request.url);
     if (type && type.match(/^image\//i)) {
     //save the image in image cache
-    console.log(`SAVE ${request.url} in image cache`);
+    console.log(`SAVED ${request.url} in image cache`);
     return caches.open(imageName).then((cache) => {
         cache.put(request, fetchResponse.clone());
         return fetchResponse;
     });
     } else {
     //save in dynamic cache - html, css, fonts, js, etc
-    console.log(`SAVE ${request.url} in dynamic cache`);
+    console.log(`SAVED ${request.url} in dynamic cache`);
     return caches.open(dynamicName).then((cache) => {
         cache.put(request, fetchResponse.clone());
         return fetchResponse;
