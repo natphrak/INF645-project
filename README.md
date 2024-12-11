@@ -11,3 +11,6 @@ Another feature of the app is that pets can be interacted with offline. Users ca
 
 Note for instructor:
 I forgot to mention it on my submission, but, while it connects and works on the first go, I cannot figure out how to make the site functional when refreshing the page. I've tried a lot of things but it just won't work when I refresh or click on a new page. It only works if you clear all site data and refresh everything.
+
+Note for final submission:
+I've tried for hours to try to fix the security issue when trying to do user authentication since I have a feeling it's caused by the unresolved error from above, I cannot figure out how to resolve the issue.
