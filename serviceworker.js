@@ -1,4 +1,30 @@
-const version = 2;
+importScripts("https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/11.0.1/firebase-messaging-compat.js");
+
+firebaseConfig.initializeApp({
+    apiKey: "AIzaSyAPmDiR8aVnm_4exKevNqOYREaGNopxpPc",
+    authDomain: "your-pet-aae02.firebaseapp.com",
+    projectId: "your-pet-aae02",
+    storageBucket: "your-pet-aae02.firebasestorage.app",
+    messagingSenderId: "793576239399",
+    appId: "1:793576239399:web:ad86587c866e15ba5fb902",
+    measurementId: "G-Q7HTPMND9W"
+});
+
+const messaging = firebase.messaging();
+// Handle background messages
+messaging.onBackgroundMessage(function(payload) {
+    console.log("[serviceworker.js] Received background message ", payload);
+    const notificationTitle = payload.notification.title;
+    const notificationOptions = {
+        body: payload.notification.body,
+        icon: "/img/icons/icon-192x192.png"
+    };
+
+    self.registration.showNotification(notificationTitle, notificationOptions);
+})
+
+const version = 3;
 
 let staticName = `staticCache-${version}`;
 let dynamicName = `dynamicCache`;
@@ -19,7 +45,8 @@ let assets = [
     '/css/materialize.css',
     '/pages/about.html',
     '/pages/pets.html',
-    'https://fonts.googleapis.com/icon?family=Material+Icons'
+    'https://fonts.googleapis.com/icon?family=Material+Icons',
+    '/pages/auth.html',
 ];
 
 let imageAssets = [
@@ -202,3 +229,23 @@ const sendMessage = async (msg, clientId) => {
         })
     )
 }
+
+// Listen for messages from app.js
+self.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "FCM_TOKEN") {
+        const fcmToken = event.data.token;
+        console.log("Received RCM token in service worker: ", fcmToken);
+    }
+});
+
+// display notification for the background message
+self.addEventListener("push", (event) => {
+    if(event.data) {
+        const payload = event.data.json();
+        const { title, body, icon } = payload.notification;
+        const options = {
+            body, icon: icon || "/img/icons/icon-192x192.png",
+        };
+        event.waitUntil(self.registration.showNotification(title, options));
+    }
+})

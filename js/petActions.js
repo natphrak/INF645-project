@@ -26,11 +26,11 @@ async function getDB() {
 // --- MAIN GAME ---
 // Displays active pet
 async function displayActivePet() {
-    const activePet = await getActivePetFromFirebase(); // Get the active pet from Firebase
+    const activePet = await getActivePetFromFirebase(); // Get active pet from Firebase
     console.log(activePet);
 
     if (activePet) {
-        // Update the HTML elements with the active pet's data
+        // Update HTML elements with active pet's data
         const petNameElement = document.getElementById('pet-name');
         const petImageElement = document.querySelector('#pet-info img');
 
@@ -116,17 +116,17 @@ async function storePetInIndexedDB(petId, updatedData) {
     const tx = db.transaction("pets", "readwrite");
     const store = tx.objectStore("pets");
 
-    // Get the existing pet data from IndexedDB
+    // Get existing pet data from IndexedDB
     const existingPet = await store.get(petId);
 
-    // Update the existing pet data with the new values
+    // Update the existing pet data with new values
     const updatedPet = {
         ...existingPet, // Keep existing data
         ...updatedData, // Add new values
         synced: false // Mark as unsynced
     };
 
-    await store.put(updatedPet); // Update the pet in IndexedDB
+    await store.put(updatedPet); // Update pet in IndexedDB
     await tx.done;
 }
 
@@ -139,12 +139,14 @@ async function syncPets() {
 
     for (const pet of pets) {
         if (!pet.synced) {
+            // Sync unsynced data only
             try {
                 await updatePetInFirebase(pet.id, pet);
                 const txUpdate = db.transaction("pets", "readwrite");
                 const storeUpdate = txUpdate.objectStore("pets");
                 await storeUpdate.put({ ...pet, synced: true });
                 await txUpdate.done;
+                console.log('Data synced!')
             } catch (error) {
                 console.error("Error syncing pet: ", error);
             }

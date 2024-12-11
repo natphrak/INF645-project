@@ -7,8 +7,11 @@ import {
     deactivateAllPets,
     getActivePetFromFirebase,
 } from "./firebaseDB.js";
+import { messaging, getToken, onMessage } from "./firebaseConfig.js";
+
 
 const STORAGE_THRESHOLD = 0.8;
+let serviceWorkerRegistration = null;
 
 const APP = {
     SW: null,
@@ -68,7 +71,7 @@ return dbPromise;
 }
 
 // Sync unsynced pets from IndexedDB to Firebase
-async function syncPets() {
+export async function syncPets() {
 const db = await getDB();
 const tx = db.transaction("pets", "readonly");
 const store = tx.objectStore("pets");
@@ -343,36 +346,39 @@ function displayPet(pet) {
 
 // Add/Edit Pet Button Listener
 const addPetButton = document.querySelector("#form-action-btn");
-addPetButton.addEventListener("click", async () => {
-    let petName = document.getElementById('name');
-    let petSpecies = document.getElementById('species');
+if (addPetButton) {
+    addPetButton.addEventListener("click", async () => {
+        let petName = document.getElementById('name');
+        let petSpecies = document.getElementById('species');
+    
+        const petIdInput = document.querySelector("#pet-id");
+        const formActionButton = document.querySelector("#form-action-btn");
+        // Prepare the pet data
+        const petId = petIdInput.value; // If editing, this will have a value
+        const petData = {
+            active: false,
+            name: petName.value,
+            species: petSpecies.value,
+            food: 0,
+            clean: 0,
+            play: 0,
+            status: "pending",
+        };
+        if (!petId) {
+            // If no petId, we are adding a new pet
+            const savedPet = await addPet(petData);
+            displayPet(savedPet); // Display new pet in the UI
+        } else {
+            // If petId exists, we are editing an existing pet
+            await editPet(petId, petData); // Edit pet in Firebase and IndexedDB
+            loadPets(); // Refresh pet list to show updated data
+        }
+        // Reset the button text and close the form
+        formActionButton.textContent = "Add";
+        closeForm();
+    });
+}
 
-    const petIdInput = document.querySelector("#pet-id");
-    const formActionButton = document.querySelector("#form-action-btn");
-    // Prepare the pet data
-    const petId = petIdInput.value; // If editing, this will have a value
-    const petData = {
-        active: false,
-        name: petName.value,
-        species: petSpecies.value,
-        food: 0,
-        clean: 0,
-        play: 0,
-        status: "pending",
-    };
-    if (!petId) {
-        // If no petId, we are adding a new pet
-        const savedPet = await addPet(petData);
-        displayPet(savedPet); // Display new pet in the UI
-    } else {
-        // If petId exists, we are editing an existing pet
-        await editPet(petId, petData); // Edit pet in Firebase and IndexedDB
-        loadPets(); // Refresh pet list to show updated data
-    }
-    // Reset the button text and close the form
-    formActionButton.textContent = "Add";
-    closeForm();
-});
 
 // Open Edit Form with Existing Pet Data
 function openEditForm(id, name, species) {
@@ -459,12 +465,51 @@ document.addEventListener('DOMContentLoaded', function(){
     // Sidenav initialization
     const menus = document.querySelector(".sidenav");
     M.Sidenav.init(menus, { edge: "right" });
-    // Add Task
+    // Add Pet
     const forms = document.querySelector(".side-form");
     M.Sidenav.init(forms, { edge: "left" });
 
-    loadPets();
-    syncPets();
+    
     checkStorageUsage();
     requestPersistentStorage();
 });
+
+async function initNotificationPermission() {
+    try {
+        const permission = await Notification.requestPermission();
+        if(permission === "granted") {
+            if (!serviceWorkerRegistration) {
+                serviceWorkerRegistration = await navigator.serviceWorker.ready;
+            }
+            const token = await getToken(messaging, {
+                vapidKey: "BFhFGK2-Vcs0Kpw-h6Lx6o5pJTf2NL80nPxi6omDRrz9QmuSzyiGH_EtsP53YtkDMD8nw8bBBbWd4O-QA_3QJRw",
+                serviceWorkerRegistration: serviceWorkerRegistration,
+            });
+            console.log("FCM Token: ", token);
+            if (toekn && currentUser) {
+                const userRef = doc(db, "users", currentUser.uid);
+                const tokeRef = collection(userRef, "fcmTokens");
+                await AudioScheduledSourceNode(tokeRef, { token: token });
+                console.log("Token saved to FireStore");
+            } else {
+                console.log("No valid user or token found");
+            }
+        } else {
+            console.log("Notification permission denied");
+        }
+    } catch(error) {
+        console.error("Error requestion notification permission: ", error);
+    }
+}
+
+onMessage(messaging, (payload) => {
+    console.log("Message received.", payload);
+    const notificationTitle = payload.notification.title;
+    const notificationOptions = {
+        body: payload.notification.body,
+        icon: "/img/icons/icon-192x192.png",
+    };
+    new Notification(notificationTitle, notificationOptions);
+})
+
+window.initNotificationPermission = initNotificationPermission;

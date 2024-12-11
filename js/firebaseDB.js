@@ -1,39 +1,34 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { currentUser } from "./auth.js";
+import { db } from "./firebaseConfig.js";
 import {
-    getFirestore,
-    collection,
-    doc,
-    addDoc,
-    getDocs,
-    deleteDoc,
-    updateDoc,
-    query,
-    where
+collection,
+addDoc,
+setDoc,
+getDocs,
+deleteDoc,
+updateDoc,
+doc,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-    apiKey: "AIzaSyAPmDiR8aVnm_4exKevNqOYREaGNopxpPc",
-    authDomain: "your-pet-aae02.firebaseapp.com",
-    projectId: "your-pet-aae02",
-    storageBucket: "your-pet-aae02.firebasestorage.app",
-    messagingSenderId: "793576239399",
-    appId: "1:793576239399:web:ad86587c866e15ba5fb902",
-    measurementId: "G-Q7HTPMND9W"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 // Add a pet
 export async function addPetToFirebase(pet) {
     try {
-        const docRef = await addDoc(collection(db, "pets"), pet);
+        if (!currentUser) {
+            throw new Error("User is not authenticated");
+        }
+        const userId = currentUser.uid;
+        console.log("userID: ", userId);
+        const userRef = doc(db, "users", userId);
+        await setDoc(
+        userRef,
+        {
+            email: currentUser.email,
+            name: currentUser.displayName,
+        },
+        { merge: true }
+        );
+        const petsRef = collection(userRef, "pets");
+        const docRef = await addDoc(petsRef, pet);
         return { id: docRef.id, ...pet };
     } catch (e) {
         console.error("Error adding pet: ", e);
@@ -43,7 +38,13 @@ export async function addPetToFirebase(pet) {
 export async function getPetsFromFirebase() {
     const pets = [];
     try {
-        const querySnapshot = await getDocs(collection(db, "pets"));
+        if (!currentUser) {
+            throw new Error("User is not authenticated");
+        }
+        const userId = currentUser.uid;
+        const petRef = collection(doc(db, "users", userId), "pets");
+
+        const querySnapshot = await getDocs(petRef);
         querySnapshot.forEach((doc) => {
         pets.push({ id: doc.id, ...doc.data() });
         });
@@ -55,17 +56,25 @@ export async function getPetsFromFirebase() {
 
 export async function deletePetFromFirebase(id) {
     try {
-        await deleteDoc(doc(db, "pets", id));
+        if (!currentUser) {
+            throw new Error("User is not authenticated");
+        }
+        const userId = currentUser.uid;
+        await deleteDoc(doc(db, "users", userId, "pets", id));
     } catch (e) {
         console.error("Error deleting pet: ", e);
     }
 }
 
 export async function updatePetInFirebase(id, updatedData) {
-    console.log(updatedData, id);
+console.log(updatedData, id);
     try {
-        const petRef = doc(db, "pets", id);
-        console.log(petRef);
+        if (!currentUser) {
+            throw new Error("User is not authenticated");
+        }
+        const userId = currentUser.uid;
+        const petRef = doc(db, "users", userId, "pets", id);
+
         await updateDoc(petRef, updatedData);
     } catch (e) {
         console.error("Error updating pet: ", e);
@@ -74,7 +83,13 @@ export async function updatePetInFirebase(id, updatedData) {
 
 export async function deactivateAllPets() {
     try {
-        const querySnapshot = await getDocs(collection(db, "pets"));
+        if (!currentUser) {
+            throw new Error("User is not authenticated");
+        }
+        const userId = currentUser.uid;
+        const petRef = doc(db, "users", userId, "pets", id);
+
+        const querySnapshot = await getDocs(petRef);
         querySnapshot.forEach(doc => {
             updateDoc(doc.ref, { active: false });
         })
@@ -86,8 +101,14 @@ export async function deactivateAllPets() {
 
 export async function getActivePetFromFirebase() {
     try {
+        if (!currentUser) {
+            throw new Error("User is not authenticated");
+        }
+        const userId = currentUser.uid;
+        const petRef = doc(db, "users", userId, "pets", id);
+
         // Create a query with the where clause
-        const q = query(collection(db, "pets"), where("active", "==", true));
+        const q = query(petRef, where("active", "==", true));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
             return null; // No active pet found
